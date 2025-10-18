@@ -7,10 +7,10 @@ contributes:
     common:
       # define below YAML configuration common to all formats
       filters:
-        # You can include here Lua filters from your extension format 
+        # You can include here Lua filters from your extension format
         - color-text.lua
         - build-acm-authors.lua
-        - add-bibliography.lua
+        # - add-bibliography.lua
         - fancy-figure.lua
       shortcodes:
         # You can include here Lua filters defining shortcodes from your extension
@@ -35,10 +35,12 @@ contributes:
         - "partials/_acmart_preamble.tex"
         - "partials/_acmart_authors.tex"
         - "partials/_acmart_abstract.tex"
-      cite-method: natbib
+      # cite-method: natbib
+      cite-method: citeproc
+      csl: acm-sigchi-proceedings.csl
     html:
       # define default configuration for the html version of your format
       number-sections: true
       toc: true
       theme: custom.scss
-      csl: association-for-computing-machinery.csl        
+      csl: association-for-computing-machinery.csl

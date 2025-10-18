@@ -1,4 +1,12 @@
 ---
+# Citation
+filters:
+  - /home/alex/.local/share/nvim/lazy/zotcite/python3/zotref.py
+natbib: false
+citeproc: true
+citation-style-options:
+  - "citation-number=true"
+
 format:
   acm-pdf:
     pdf-engine: pdflatex
@@ -9,7 +17,6 @@ format:
 # which you can eventually use with TAPS
 keep-tex: true
 
-bibliography: bibliography.bib
 
 title: The Name of the Title Is Hope
 
@@ -88,7 +95,7 @@ acm-metadata:
 
   # comment this out to specify detailed document options
   # acmart-options: sigconf, review
-  acmart-options: sigconf
+  acmart-options: sigconf, natbib=false
 
   # acm preamble information
   copyright-year: 2018
@@ -666,9 +673,12 @@ the margin:
 To Robert, for the bagels and explaining CMYK and color spaces.
 :::
 
+My ref: @D5D4TIHE#temporal12, [@holmeTemporalNetworks2012]
+
 # References {-}
 
 ::: {#refs}
+
 :::
 
 # Appendix
