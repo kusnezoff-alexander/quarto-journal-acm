@@ -1,6 +1,7 @@
 --[[
 Pandoc Lua filter to convert tables to supertabular format.
 Supertabular works better than longtable in double-column formats.
+Fixed to handle text wrapping in narrow columns.
 
 Usage:
     pandoc input.md -o output.tex --lua-filter supertabular.lua
@@ -17,7 +18,8 @@ local function add_header_includes(meta)
 
   local packages = {
     pandoc.RawBlock('latex', '\\usepackage{supertabular}'),
-    pandoc.RawBlock('latex', '\\usepackage{array}')
+    pandoc.RawBlock('latex', '\\usepackage{array}'),
+    pandoc.RawBlock('latex', '\\usepackage{calc}') -- For column width calculations
   }
 
   for _, pkg in ipairs(packages) do
@@ -28,25 +30,27 @@ local function add_header_includes(meta)
   return meta
 end
 
-local function align_to_latex(align)
+local function align_to_latex(align, width)
+  -- Use paragraph columns with wrapping instead of simple alignment
+  local align_char
   if align == 'AlignLeft' then
-    return 'l'
+    align_char = 'p'
   elseif align == 'AlignRight' then
-    return 'r'
+    align_char = 'r' -- For right alignment with wrapping, use >{\raggedleft\arraybackslash}p
+    return '>{\\raggedleft\\arraybackslash}p{' .. width .. '}'
   elseif align == 'AlignCenter' then
-    return 'c'
+    align_char = 'c' -- For center alignment with wrapping, use >{\centering\arraybackslash}p
+    return '>{\\centering\\arraybackslash}p{' .. width .. '}'
   else
-    return 'l'
+    align_char = 'p'
   end
+  return align_char .. '{' .. width .. '}'
 end
 
 local function process_inlines(inlines)
   -- Process inline elements and preserve LaTeX math and code
   local result = {}
   for _, inline in ipairs(inlines) do
-    -- Debug: print inline type
-    io.stderr:write('    [Inline type: ' .. inline.t .. '] ')
-
     if inline.t == 'Math' then
       if inline.mathtype == 'InlineMath' then
         table.insert(result, '$' .. inline.text .. '$')
@@ -56,7 +60,6 @@ local function process_inlines(inlines)
     elseif inline.t == 'Code' then
       -- Preserve inline code as \texttt{}
       local code_text = inline.text
-      io.stderr:write('Code content: "' .. code_text .. '" ')
       -- Escape backslashes in code for LaTeX
       code_text = code_text:gsub('\\', '\\textbackslash{}')
       table.insert(result, '\\texttt{' .. code_text .. '}')
@@ -113,21 +116,42 @@ local function table_to_supertabular(tbl)
 
   -- Debug output
   io.stderr:write('\n=== TABLE DETECTED ===\n')
-  io.stderr:write('Caption: ')
-  io.stderr:write(caption)
-  io.stderr:write('\n')
-  io.stderr:write('Label: ')
-  io.stderr:write(label)
-  io.stderr:write('\n')
+  io.stderr:write('Caption: ' .. caption .. '\n')
+  io.stderr:write('Label: ' .. label .. '\n')
   io.stderr:write('Number of columns: ' .. tostring(#tbl.colspecs) .. '\n')
 
-  -- Build column specification
+  -- Calculate column widths
+  local num_cols = #tbl.colspecs
+  local total_width = '\\columnwidth'
+  local separator_width = 0.02 -- Width for separators and padding
+
+  -- Build column specification with automatic wrapping
   local col_spec = {}
   for i, spec in ipairs(tbl.colspecs) do
-    local align = align_to_latex(spec[1])
-    table.insert(col_spec, align)
-    io.stderr:write('Column ' .. tostring(i) .. ' alignment: ' .. align .. '\n')
+    local align = spec[1]
+    local col_width
+
+    -- Calculate proportional width for each column
+    -- Account for table borders and padding
+    if num_cols == 1 then
+      col_width = '0.95\\columnwidth'
+    elseif num_cols == 2 then
+      col_width = '0.45\\columnwidth'
+    elseif num_cols == 3 then
+      col_width = '0.29\\columnwidth'
+    elseif num_cols == 4 then
+      col_width = '0.21\\columnwidth'
+    else
+      -- For 5+ columns, calculate dynamically
+      local width_factor = 0.95 / num_cols
+      col_width = string.format('%.2f\\columnwidth', width_factor)
+    end
+
+    local col_type = align_to_latex(align, col_width)
+    table.insert(col_spec, col_type)
+    io.stderr:write('Column ' .. tostring(i) .. ' spec: ' .. col_type .. '\n')
   end
+
   local col_format = '|' .. table.concat(col_spec, '|') .. '|'
   io.stderr:write('Column format: ' .. col_format .. '\n')
 
@@ -143,7 +167,7 @@ local function table_to_supertabular(tbl)
     end
   end
 
-  -- Begin supertabular
+  -- Begin supertabular with column width constraints
   table.insert(latex, '\\begin{supertabular}{' .. col_format .. '}')
   table.insert(latex, '\\hline')
 

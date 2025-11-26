@@ -141,6 +141,7 @@
 \definecolor{mypink}{RGB}{219, 48, 122}
 \usepackage{supertabular}
 \usepackage{array}
+\usepackage{calc}
 \makeatletter
 \@ifpackageloaded{caption}{}{\usepackage{caption}}
 \AtBeginDocument{%
@@ -658,9 +659,8 @@ desired horizontal and vertical rules. Again, detailed instructions on
 \textbf{tabular} material are found in the \emph{\LaTeX~User's Guide}.
 
 Immediately following this sentence is the point at which
-Table~\ref{tbl-freq} is included in the input file; compare the
-placement of the table here with the table in the printed output of this
-document.
+{[}\textbf{tbl?}{]} is included in the input file; compare the placement
+of the table here with the table in the printed output of this document.
 
 \begin{table}
 
@@ -668,7 +668,7 @@ document.
 
 \centering{
 
-\begin{supertabular}{|c|c|l|}
+\begin{supertabular}{|>{\centering\arraybackslash}p{0.29\columnwidth}|>{\centering\arraybackslash}p{0.29\columnwidth}|p{0.29\columnwidth}|}
 \hline
 {\bfseries Non-English or Math} & {\bfseries Frequency} & {\bfseries Comments} \\
 \hline
@@ -690,8 +690,8 @@ To set a wider table, which takes up the whole width of the page's live
 area, use the environment \textbf{table*} to enclose the table's
 contents and the table caption. As with a single-column table, this wide
 table will ``float'' to a location deemed more desirable. Immediately
-following this sentence is the point at which Table~\ref{tbl-commands}
-is included in the input file; again, it is instructive to compare the
+following this sentence is the point at which {[}\textbf{tbl?}{]} is
+included in the input file; again, it is instructive to compare the
 placement of the table here with the table in the printed output of this
 document.
 
@@ -701,11 +701,11 @@ document.
 
 \centering{
 
-\begin{supertabular}{|c|c|l|}
+\begin{supertabular}{|>{\centering\arraybackslash}p{0.29\columnwidth}|>{\centering\arraybackslash}p{0.29\columnwidth}|p{0.29\columnwidth}|}
 \hline
 {\bfseries Command} & {\bfseries A Number} & {\bfseries Comments} \\
 \hline
-\texttt{\textbackslash{}author} & 100 & Author \\
+\texttt{\textbackslash{}author} & 100 & Author aaaaaaaaa aaaaaaaaaaaaaaaa-aaaaaaa aaaaaaaaaaaaaa-aaaaaaaaaa \\
 \hline
 \texttt{\textbackslash{}table} & 300 & For tables \\
 \hline
@@ -752,7 +752,7 @@ environment. An unnumbered display equation is produced by the
 Again, in either environment, you can use any of the symbols and
 structures available in \LaTeX@; this section will just give a couple of
 examples of display equations in context. First, consider
-Equation~\ref{eq-oneequation}, shown as an inline equation above:
+{[}\textbf{eq?}{]}, shown as an inline equation above:
 
 \begin{equation}\phantomsection\label{eq-oneequation}{
 \lim_{n\rightarrow \infty}x=0
@@ -764,8 +764,7 @@ equation:
 
 \[\sum_{i=0}^{\infty} x + 1\]
 
-and follow it with Equation~\ref{eq-anotherequation}, another numbered
-equation:
+and follow it with {[}\textbf{eq?}{]}, another numbered equation:
 
 \begin{equation}\phantomsection\label{eq-anotherequation}{
 \sum_{i=0}^{\infty}x_i=\int_{0}^{\pi+2} f
@@ -888,12 +887,11 @@ patent {[}\textbf{JoeScientist001?}{]}, work accepted for publication
 {[}\textbf{rous08?}{]}, `YYYYb'-test for prolific author
 {[}\textbf{SaeediMEJ10?}{]} and {[}\textbf{SaeediJETC10?}{]}. Other
 cites might contain `duplicate' DOI and URLs (some SIAM articles)
-{[}\textbf{Kirschmer-2010-AEI-1958016-1958018?}{]}. Boris / Barbara
-Beeton: multi-volume works as books {[}\textbf{MR781536?}{]} and
-{[}\textbf{MR781537?}{]}. A couple of citations with DOIs:
-{[}\textbf{Kirschmer-2010-AEI-1958016-1958018?}{]}. Online citations:
-{[}\textbf{CTANacmart?}{]}. Artifacts: {[}\textbf{R?}{]} and
-{[}\textbf{UMassCitations?}{]}.
+{[}\textbf{Kirschmer?}{]}. Boris / Barbara Beeton: multi-volume works as
+books {[}\textbf{MR781536?}{]} and {[}\textbf{MR781537?}{]}. A couple of
+citations with DOIs: {[}\textbf{Kirschmer-2010-AEI-1958016-1958018?}{]}.
+Online citations: {[}\textbf{CTANacmart?}{]}. Artifacts:
+{[}\textbf{R?}{]} and {[}\textbf{UMassCitations?}{]}.
 
 \section{Acknowledgments}\label{acknowledgments}
 

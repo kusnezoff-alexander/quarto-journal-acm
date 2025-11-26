@@ -426,7 +426,7 @@ in the printed output of this document.
 
 | Command   | A Number | Comments            |
 |:---------:|:--------:|:--------------------|
-| `\author` | 100      | Author              |
+| `\author` | 100      | Author aaaaaaaaa aaaaaaaaaaaaaaaa-aaaaaaa aaaaaaaaaaaaaa-aaaaaaaaaa              |
 | `\table`  | 300      | For tables          |
 | `\table*` | 400      | For wider tables    |
 
