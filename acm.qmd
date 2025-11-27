@@ -12,6 +12,8 @@ format:
     pdf-engine: pdflatex
     filters:
       - filters/supertable-filter.lua
+    header-includes: |
+      \usepackage[ruled,vlined,figure]{algorithm2e}
 
 # use keep-tex to cause quarto to generate a .tex file
 # which you can eventually use with TAPS
@@ -188,6 +190,22 @@ The "`acmart`" document class can be used to prepare articles
 for any ACM publication --- conference or journal, and for any stage
 of publication, from review to final "camera-ready" copy, to the
 author's own version, with _very_ few changes to the source.
+
+# Some Algo
+
+```{=latex}
+\begin{algorithm}[H]
+\SetAlgoLined
+\KwData{Logic Network}
+\KwResult{SubarrayAssignment: \[ NodeId \to \mathcal{P}(S) \]}
+ initialization\;
+ \While{condition}{
+  instructions\;
+ }
+ \caption{Example algorithm}
+\end{algorithm}
+```
+
 
 # Template Overview
 

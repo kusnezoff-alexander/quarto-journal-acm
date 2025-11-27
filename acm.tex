@@ -138,7 +138,7 @@
  
 
 
-\definecolor{mypink}{RGB}{219, 48, 122}
+\definecolor{mypink}{RGB}{219, 48, 122}\usepackage[ruled,vlined,figure]{algorithm2e}
 \usepackage{supertabular}
 \usepackage{array}
 \usepackage{calc}
@@ -421,6 +421,19 @@ The ``\texttt{acmart}'' document class can be used to prepare articles
 for any ACM publication --- conference or journal, and for any stage of
 publication, from review to final ``camera-ready'' copy, to the author's
 own version, with \emph{very} few changes to the source.
+
+\section{Some Algo}\label{some-algo}
+
+\begin{algorithm}[H]
+\SetAlgoLined
+\KwData{Logic Network}
+\KwResult{SubarrayAssignment: \[ NodeId \to \mathcal{P}(S) \]}
+ initialization\;
+ \While{condition}{
+  instructions\;
+ }
+ \caption{Example algorithm}
+\end{algorithm}
 
 \section{Template Overview}\label{template-overview}
 
