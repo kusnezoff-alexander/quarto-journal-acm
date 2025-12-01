@@ -2,6 +2,7 @@
 # Citation
 filters:
   - quarto
+  - d2
   - filters/emoji.lua
   - filters/supertable-filter.lua
   - /home/alex/.local/share/nvim/lazy/zotcite/python3/zotref.py
@@ -617,6 +618,104 @@ couple of citations with DOIs:
 [@2004-ITE-1009386-1010128, @Kirschmer-2010-AEI-1958016-1958018]. Online
 citations: [@TUGInstmem, @Thornburg01, @CTANacmart].
 Artifacts: [@R] and [@UMassCitations].
+
+# Diagrams
+
+
+```{.d2 theme="CoolClassics" layout="elk" format="png" pad=0 height="80%"}
+direction: right
+
+b_i: {
+  label: "b_i\n(input)"
+  shape: rectangle
+  style: {
+    fill: "#E6F2FF"
+    stroke: "#0074D9"
+    stroke-width: 2
+  }
+}
+
+b_i_next: {
+  label: "b_i_next\n(input)"
+  shape: rectangle
+  style: {
+    fill: "#E6F2FF"
+    stroke: "#0074D9"
+    stroke-width: 2
+  }
+}
+
+m: {
+  label: "m\n(input)"
+  shape: rectangle
+  style: {
+    fill: "#E6F2FF"
+    stroke: "#0074D9"
+    stroke-width: 2
+  }
+}
+
+m_not: {
+  label: "NOT(m)"
+  shape: rectangle
+  style: {
+    fill: "#FFF2E6"
+    stroke: "#FF851B"
+    stroke-width: 2
+  }
+}
+
+O1: {
+  label: "O1 = AND(m, b_i_next)"
+  shape: rectangle
+  style: {
+    fill: "#E6FFE6"
+    stroke: "#2ECC40"
+    stroke-width: 2
+  }
+}
+
+O2: {
+  label: "O2 = AND(NOT(m), b_i)"
+  shape: rectangle
+  style: {
+    fill: "#E6FFE6"
+    stroke: "#2ECC40"
+    stroke-width: 2
+  }
+}
+
+bi: {
+  label: "bi = OR(O1, O2)"
+  shape: rectangle
+  style: {
+    fill: "#FFFBE6"
+    stroke: "#FFDC00"
+    stroke-width: 2
+  }
+}
+
+Output: {
+  label: "Output\nbi"
+  shape: rectangle
+  style: {
+    fill: "#F0E6FF"
+    stroke: "#B10DC9"
+    stroke-width: 2
+  }
+}
+
+m -> O1
+b_i_next -> O1
+
+m -> m_not
+m_not -> O2
+b_i -> O2
+
+O1 -> bi
+O2 -> bi
+bi -> Output
+```
 
 # Acknowledgments
 
