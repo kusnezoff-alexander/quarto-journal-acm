@@ -1,6 +1,9 @@
 ---
 # Citation
 filters:
+  - quarto
+  - filters/emoji.lua
+  - filters/supertable-filter.lua
   - /home/alex/.local/share/nvim/lazy/zotcite/python3/zotref.py
 natbib: false
 citeproc: true
@@ -9,11 +12,12 @@ citation-style-options:
 
 format:
   acm-pdf:
-    pdf-engine: pdflatex
-    filters:
-      - filters/supertable-filter.lua
+    pdf-engine: lualatex
     header-includes: |
-      \usepackage[ruled,vlined,figure]{algorithm2e}
+      \usepackage[vlined,figure]{algorithm2e}
+      \usepackage{tablefootnote}
+    include-in-header:
+      - filters/emoji_font.tex
 
 # use keep-tex to cause quarto to generate a .tex file
 # which you can eventually use with TAPS
@@ -173,6 +177,8 @@ abstract: |
 ---
 
 # Introduction
+
+Emoji: ✅
 
 ACM's consolidated article template, introduced in 2017, provides a
 consistent \LaTeX\ style for use across ACM publications, and
